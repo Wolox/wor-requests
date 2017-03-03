@@ -5,10 +5,6 @@ module Wor
     class ExternalApiService
       # TODO: include httparty in this class and some way to get the base_url from the child class
       # TODO: add query to requests like httparty
-      # TODO: Add a default looger from the config
-      def initialize
-        @logger = Logger.new
-      end
 
       protected
 
@@ -35,19 +31,21 @@ module Wor
       end
 
       def log_success(attempt)
-        @logger.info "Successfully #{attempt}"
+        Wor::Requests.config[:logger].info "Successfully #{attempt}"
       end
 
       def log_attempt(attempt)
-        @logger.info "Attempting to #{attempt}"
+        Wor::Requests.config[:logger].info "Attempting to #{attempt}"
       end
 
       def log_error(response:, attempting_to:)
         response_error = "Error when trying to #{attempting_to}. Status code: #{response.code}. "
         response_error << "Response error: #{JSON.parse(response.body)}" if response.body.present?
-        @logger.error response_error
+        Wor::Requests.config[:logger].error response_error
       rescue => e
-        @logger.error("#{response_error} Error while parsing response body: #{e.message}")
+        Wor::Requests.config[:logger].error(
+          "#{response_error} Error while parsing response body: #{e.message}"
+        )
       end
 
       def exception_message
