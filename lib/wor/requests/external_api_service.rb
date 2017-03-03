@@ -4,7 +4,6 @@ module Wor
   module Requests
     class ExternalApiService
       # TODO: include httparty in this class and some way to get the base_url from the child class
-      # TODO: add query to requests like httparty
       # TODO: Add a default looger from the config
       def initialize
         @logger = Logger.new
@@ -14,7 +13,7 @@ module Wor
 
       def request_with_query_params(method:, endpoint:, attempting_to:, query: {}, headers: {})
         log_attempt attempting_to
-        response = self.class.send(method, endpoint, options(headers: headers))
+        response = self.class.send(method, endpoint, options(headers: headers, query: query))
         if response.success?
           log_success attempting_to
           return (block_given? ? yield(response) : response)
@@ -54,9 +53,10 @@ module Wor
         external_api_name + 'communication error'
       end
 
-      def options(headers:, body: {})
-        { body: body, headers: headers }
+      def options(headers:, query: {}, body: {})
+        { body: body, headers: headers, query: query }
       end
+
 
       # This can be Overriden in the child class for a more descriptive error message
       def external_api_name
