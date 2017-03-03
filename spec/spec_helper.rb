@@ -1,2 +1,4 @@
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require "wor/requests"
+require 'simplecov'
+SimpleCov.start
+
+require 'wor/requests'
