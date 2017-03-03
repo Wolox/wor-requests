@@ -9,10 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["draffo"]
   spec.email         = ["diego.raffo@wolox.com.ar"]
 
-  # TODO: Update this info
   spec.summary       = %q{Write a short summary, because Rubygems requires one.}
   spec.description   = %q{Write a longer description or delete this line.}
-  spec.homepage      = "http://www.google.com"
+  spec.homepage      = "https://github.com/Wolox/wor-requests"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
