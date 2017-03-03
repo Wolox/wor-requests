@@ -3,11 +3,13 @@ require 'logger'
 module Wor
   module Requests
     class ExternalApiService
-      # TODO: include httparty in this class and some way to get the base_url from the child class
       # TODO: add query to requests like httparty
-      # TODO: Add a default looger from the config
+
+      include HTTParty
+
       def initialize
         @logger = Logger.new
+        self.class.base_uri base_url
       end
 
       protected
@@ -61,6 +63,11 @@ module Wor
       # This can be Overriden in the child class for a more descriptive error message
       def external_api_name
         self.class.name
+      end
+
+      # Must be overriden
+      def base_url
+        raise 'SubclassResponsibility'
       end
     end
   end
