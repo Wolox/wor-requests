@@ -1,5 +1,3 @@
-require 'logger'
-
 module Wor
   module Requests
     class ExternalApiService

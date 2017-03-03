@@ -1,6 +1,6 @@
 # Wolox on Rails - Requests
 
-TODO: Add description here
+This gem lets you easily add to your service objects the ability to make external requests, logging everything so you don't have to worry about that.
 
 ## Installation
 
@@ -18,9 +18,40 @@ Or install it yourself as:
 
     $ gem install wor-requests
 
+Then you can modify the default configurations:
+
+```ruby
+# config/initializers/wor_requests.rb
+
+Wor::Requests.configure do |config|
+  config.logger = Rails.logger
+end
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'wor/requests'
+
+class GithubService < Wor::Requests::Base
+  def repositories(username)
+    get(
+      attempting_to: "get repositories of #{username}",
+      path: "/users/#{username}/repos"
+    )
+  rescue Wor::Requests::RequestError => e
+    puts e.message
+  end
+
+  protected
+
+  def base_url
+    'https://api.github.com'
+  end
+end
+
+puts GithubService.new.repositories('alebian')
+```
 
 ## Contributing
 

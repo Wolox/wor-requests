@@ -1,11 +1,5 @@
 module Wor
   module Requests
-    class RequestError < StandardError
-      attr_reader :response
-
-      def initialize(response)
-        @response = response
-      end
-    end
+    class RequestError < StandardError; end
   end
 end
