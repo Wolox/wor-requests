@@ -1,4 +1,7 @@
 # Wolox on Rails - Requests
+<a href="https://codeclimate.com/github/Wolox/wor-requests"><img src="https://codeclimate.com/github/Wolox/wor-requests/badges/gpa.svg" /></a>
+<a href="https://codeclimate.com/github/Wolox/wor-requests/coverage"><img src="https://codeclimate.com/github/Wolox/wor-requests/badges/coverage.svg" /></a>
+<a href="https://codeclimate.com/github/Wolox/wor-requests"><img src="https://codeclimate.com/github/Wolox/wor-requests/badges/issue_count.svg" /></a>
 
 This gem lets you easily add to your service objects the ability to make external requests, logging everything so you don't have to worry about that.
 
