@@ -4,7 +4,7 @@ require 'generators/wor/requests/service_generator'
 describe Wor::Requests::Generators::ServiceGenerator, type: :generator do
   context 'generating a service with a name' do
     destination File.expand_path('../../../../tmp', __FILE__)
-    arguments %w(book)
+    arguments %w[book]
 
     before(:all) do
       prepare_destination

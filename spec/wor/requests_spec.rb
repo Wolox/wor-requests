@@ -12,6 +12,7 @@ describe Wor::Requests do
   end
 
   describe '.configure' do
+    let!(:default_logger) { described_class.config[:logger] }
     let(:new_logger) { 'NEW_LOGGER' }
 
     before do
@@ -22,6 +23,12 @@ describe Wor::Requests do
 
     it 'can be configured' do
       expect(described_class.config[:logger]).to eq(new_logger)
+    end
+
+    after do
+      described_class.configure do |config|
+        config.logger = default_logger
+      end
     end
   end
 end

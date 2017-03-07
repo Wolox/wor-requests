@@ -24,6 +24,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'httparty', '~> 0.13'
   spec.add_dependency 'railties', '>= 4.1.0', '< 5.1'
 
+  #TODO: add versions?
+  spec.add_development_dependency 'faker'
+  spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'byebug', '~> 9.0'
   spec.add_development_dependency 'rubocop', '~> 0.47'
   spec.add_development_dependency 'bundler', '~> 1.13'

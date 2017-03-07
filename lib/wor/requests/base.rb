@@ -46,6 +46,10 @@ module Wor
         after_error(resp, options)
       end
 
+      def logger
+        Wor::Requests.logger
+      end
+
       protected
 
       def base_url
@@ -76,10 +80,6 @@ module Wor
 
       def uri(path)
         URI.join(base_url, path)
-      end
-
-      def logger
-        Wor::Requests.logger
       end
 
       def log_success(attempt)
