@@ -7,65 +7,43 @@ module Wor
   module Requests
     class Base
       VALID_HTTP_VERBS = [:get, :post, :patch, :put, :delete].freeze
+
       # According to RFC 7231
-      VALID_COMMON_ATTRIBUTES = [:path, :headers, :attempting_to, :response_type].freeze
-      VALID_GET_ATTRIBUTES    = VALID_COMMON_ATTRIBUTES + [:query]
-      VALID_POST_ATTRIBUTES   = VALID_COMMON_ATTRIBUTES + [:body, :query]
-      VALID_PATCH_ATTRIBUTES  = VALID_COMMON_ATTRIBUTES + [:body, :query]
-      VALID_PUT_ATTRIBUTES    = VALID_COMMON_ATTRIBUTES + [:body, :query]
-      VALID_DELETE_ATTRIBUTES = VALID_COMMON_ATTRIBUTES + [:query]
+      COMMON_ATTRIBUTES = [:path, :headers, :attempting_to, :response_type].freeze
+      HAS_QUERY         = [:query].freeze
+      HAS_BODY          = [:body].freeze
+      HTTP_COMPLETE     = (COMMON_ATTRIBUTES + HAS_QUERY + HAS_BODY).freeze
+      HTTP_QUERY_ONLY   = (COMMON_ATTRIBUTES + HAS_QUERY).freeze
+      GET_ATTRIBUTES    = HTTP_QUERY_ONLY
+      POST_ATTRIBUTES   = HTTP_COMPLETE
+      PATCH_ATTRIBUTES  = HTTP_COMPLETE
+      PUT_ATTRIBUTES    = HTTP_COMPLETE
+      DELETE_ATTRIBUTES = HTTP_QUERY_ONLY
 
-      def get(opts = {}, &block)
-        request(
-          opts.select { |k, _v| VALID_GET_ATTRIBUTES.include?(k) }.merge(method: :get),
-          &block
-        )
+      # Define the methods:
+      #   - get(opts = {}, &block)
+      #   - post(opts = {}, &block)
+      #   - patch(opts = {}, &block)
+      #   - put(opts = {}, &block)
+      #   - delete(opts = {}, &block)
+      VALID_HTTP_VERBS.each do |method|
+        define_method(method) do |opts = {}, &block|
+          request(
+            opts.select { |k, _v| constantize("#{method.upcase}_ATTRIBUTES").include?(k) }
+                .merge(method: method),
+            &block
+          )
+        end
       end
 
-      def post(opts = {}, &block)
-        request(
-          opts.select { |k, _v| VALID_POST_ATTRIBUTES.include?(k) }.merge(method: :post),
-          &block
-        )
-      end
-
-      def patch(opts = {}, &block)
-        request(
-          opts.select { |k, _v| VALID_PATCH_ATTRIBUTES.include?(k) }.merge(method: :patch),
-          &block
-        )
-      end
-
-      def put(opts = {}, &block)
-        request(
-          opts.select { |k, _v| VALID_PUT_ATTRIBUTES.include?(k) }.merge(method: :put),
-          &block
-        )
-      end
-
-      def delete(opts = {}, &block)
-        request(
-          opts.select { |k, _v| VALID_DELETE_ATTRIBUTES.include?(k) }.merge(method: :delete),
-          &block
-        )
-      end
-
-      # rubocop:disable AbcSize
-      # rubocop:disable MethodLength
       def request(options = {})
         validate_method!(options[:method])
 
         log_attempt(options[:attempting_to])
         resp = HTTParty.send(options[:method], uri(options[:path]), request_parameters(options))
 
-        if resp.success?
-          log_success(options[:attempting_to])
-          return yield(resp) if block_given?
-          handle_response(resp, options[:response_type])
-        else
-          log_error(resp, options[:attempting_to])
-          raise Wor::Requests::RequestError, exception_message
-        end
+        return after_success(resp, options) if resp.success?
+        after_error(resp, options)
       end
 
       protected
@@ -83,6 +61,17 @@ module Wor
       end
 
       private
+
+      def after_success(response, options)
+        log_success(options[:attempting_to])
+        return yield(response) if block_given?
+        handle_response(response, options[:response_type])
+      end
+
+      def after_error(response, options)
+        log_error(response, options[:attempting_to])
+        raise Wor::Requests::RequestError.new(response), exception_message
+      end
 
       def uri(path)
         URI.join(base_url, path)
@@ -123,9 +112,12 @@ module Wor
         answer
       end
 
-      # rubocop:disable DoubleNegation
       def present?(object)
-        !!object
+        !object.nil?
+      end
+
+      def constantize(string)
+        self.class.class_eval(string)
       end
 
       def validate_method!(method)
