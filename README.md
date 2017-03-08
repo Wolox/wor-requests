@@ -1,4 +1,5 @@
 # Wolox on Rails - Requests
+[![Build Status](https://travis-ci.org/Wolox/wor-requests.svg)](https://travis-ci.org/Wolox/wor-requests)
 [![Code Climate](https://codeclimate.com/github/Wolox/wor-requests/badges/gpa.svg)](https://codeclimate.com/github/Wolox/wor-requests)
 [![Test Coverage](https://codeclimate.com/github/Wolox/wor-requests/badges/coverage.svg)](https://codeclimate.com/github/Wolox/wor-requests/coverage)
 [![Issue Count](https://codeclimate.com/github/Wolox/wor-requests/badges/issue_count.svg)](https://codeclimate.com/github/Wolox/wor-requests)
