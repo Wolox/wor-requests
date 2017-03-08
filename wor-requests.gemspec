@@ -12,9 +12,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['draffo']
   spec.email         = ['diego.raffo@wolox.com.ar']
 
-  # TODO: Change summary and description
-  spec.summary       = 'Write a short summary, because Rubygems requires one.'
-  spec.description   = 'Write a longer description or delete this line.'
+  spec.summary       = 'This gem lets you easily add to your service objects the ability to make external requests'
+  spec.description   = 'This gem lets you easily add to your service objects the ability to make external requests, logging everything so you don\'t have to worry about that.'
   spec.homepage      = 'https://github.com/Wolox/wor-requests'
   spec.license       = 'MIT'
 
