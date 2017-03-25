@@ -22,7 +22,7 @@ Or install it yourself as:
 
     $ gem install wor-requests
 
-Then you can modify the default configurations:
+Then you can run `rails generate wor:requests:install` to create the initializer:
 
 ```ruby
 # config/initializers/wor_requests.rb
@@ -33,6 +33,8 @@ end
 ```
 
 ## Usage
+
+To write your first Service using Wor-requests you can write something like this:
 
 ```ruby
 require 'wor/requests'
@@ -56,6 +58,8 @@ end
 
 puts GithubService.new.repositories('alebian')
 ```
+
+Or, even easier, run `rails generate wor:requests:service NAME` in your Rails root
 
 ## Contributing
 
