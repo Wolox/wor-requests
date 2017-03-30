@@ -36,13 +36,13 @@ module Wor
         end
       end
 
-      def request(options = {})
+      def request(options = {}, &block)
         validate_method!(options[:method])
 
         log_attempt(options[:attempting_to])
         resp = HTTParty.send(options[:method], uri(options[:path]), request_parameters(options))
 
-        return after_success(resp, options) if resp.success?
+        return after_success(resp, options, &block) if resp.success?
         after_error(resp, options)
       end
 
@@ -64,6 +64,7 @@ module Wor
 
       def after_success(response, options)
         log_success(options[:attempting_to])
+
         return yield(response) if block_given?
         handle_response(response, options[:response_type])
       end
