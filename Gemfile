@@ -5,5 +5,6 @@ gemspec
 
 group :test do
   gem 'codeclimate-test-reporter', '~> 1.0.0'
+  gem 'generator_spec'
   gem 'simplecov'
 end

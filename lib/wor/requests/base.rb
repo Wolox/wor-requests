@@ -6,10 +6,10 @@ require 'json'
 module Wor
   module Requests
     class Base
-      VALID_HTTP_VERBS = [:get, :post, :patch, :put, :delete].freeze
+      VALID_HTTP_VERBS = %i(get post patch put delete).freeze
 
       # According to RFC 7231
-      COMMON_ATTRIBUTES = [:path, :headers, :attempting_to, :response_type].freeze
+      COMMON_ATTRIBUTES = %i(path headers attempting_to response_type).freeze
       HAS_QUERY         = [:query].freeze
       HAS_BODY          = [:body].freeze
       HTTP_COMPLETE     = (COMMON_ATTRIBUTES + HAS_QUERY + HAS_BODY).freeze
