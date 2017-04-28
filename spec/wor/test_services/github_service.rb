@@ -10,7 +10,7 @@ class GithubService < Wor::Requests::Base
       path: "/users/#{username}/repos"
     )
   rescue Wor::Requests::RequestError => e
-    puts e.message
+    e
   end
 
   def repositories_with_log_with_block(username)
@@ -19,7 +19,7 @@ class GithubService < Wor::Requests::Base
       path: "/users/#{username}/repos"
     ) { |response| JSON.parse(response.body)['repos'].reduce('', :+) }
   rescue Wor::Requests::RequestError => e
-    puts e.message
+    e
   end
 
   def repositories_without_log_without_block(username)
@@ -27,7 +27,7 @@ class GithubService < Wor::Requests::Base
       path: "/users/#{username}/repos"
     )
   rescue Wor::Requests::RequestError => e
-    puts e.message
+    e
   end
 
   def repositories_without_log_with_block(username)
@@ -35,7 +35,13 @@ class GithubService < Wor::Requests::Base
       path: "/users/#{username}/repos"
     ) { |response| JSON.parse(response.body)['repos'].reduce('', :+) }
   rescue Wor::Requests::RequestError => e
-    puts e.message
+    e
+  end
+
+  def repositories_without_rescue(username)
+    get(
+      path: "/users/#{username}/repos"
+    )
   end
 
   protected

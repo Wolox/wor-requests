@@ -94,15 +94,15 @@ module Wor
 
       def log_error(response, attempting_to)
         return unless present?(attempting_to)
-        response_error = "ERROR when trying to #{attempting_to}. Status code: #{response.code}. "
-        response_error << "Response error: #{JSON.parse(response.body)}" if present?(response.body)
+        response_error = "ERROR when trying to #{attempting_to}. Got status code: #{response.code}, "
+        response_error << "with response error: #{JSON.parse(response.body)}" if present?(response.body)
         logger.error response_error
       rescue => e
         logger.error("#{response_error} ERROR while parsing response body: #{e.message}.")
       end
 
       def exception_message
-        "#{external_api_name} communication error. See logs for more information."
+        "#{external_api_name} got an error. See logs for more information."
       end
 
       def request_parameters(options_hash)
