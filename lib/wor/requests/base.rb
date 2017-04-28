@@ -28,11 +28,11 @@ module Wor
       #   - delete(opts = {}, &block)
       VALID_HTTP_VERBS.each do |method|
         define_method(method) do |opts = {}, &block|
-          request(
-            opts.select { |k, _v| constantize("#{method.upcase}_ATTRIBUTES").include?(k) }
-                .merge(method: method),
-            &block
-          )
+          method_attributes = constantize("#{method.upcase}_ATTRIBUTES")
+          unpermitted_attributes = opts.keys - method_attributes
+          raise Wor::Requests::InvalidOptionsError.new(unpermitted_attributes) unless unpermitted_attributes.empty?
+
+          request(opts.merge(method: method), &block)
         end
       end
 

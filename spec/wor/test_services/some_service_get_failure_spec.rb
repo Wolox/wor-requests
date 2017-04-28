@@ -1,3 +1,4 @@
+require 'wor/requests/invalid_options_error'
 require_relative 'some_service'
 require_relative '../../support/mocks/failure_responses.rb'
 
@@ -99,6 +100,14 @@ describe SomeService do
 
         it 'raises exception' do
           expect{ service.get_without_rescue }.to raise_error(Wor::Requests::RequestError)
+        end
+      end
+
+      context 'when invalid option set for method to hash' do
+        subject(:service) { described_class.new }
+
+        it 'raises exception' do
+          expect{ service.get_with_body }.to raise_error(Wor::Requests::InvalidOptionsError)
         end
       end
     end

@@ -6,8 +6,8 @@ require 'logger'
 class SomeService < Wor::Requests::Base
   def get_with_log_without_block
     get(
-      attempting_to: "attempting_to get mypath",
-      path: "/mypath"
+      attempting_to: 'attempting_to get mypath',
+      path: '/mypath'
     )
   rescue Wor::Requests::RequestError => e
     e
@@ -15,8 +15,8 @@ class SomeService < Wor::Requests::Base
 
   def get_with_log_with_block
     get(
-      attempting_to: "attempting_to get mypath",
-      path: "/mypath"
+      attempting_to: 'attempting_to get mypath',
+      path: '/mypath'
     ) { |response| JSON.parse(response.body)['array'].reduce('', :+) }
   rescue Wor::Requests::RequestError => e
     e
@@ -24,7 +24,7 @@ class SomeService < Wor::Requests::Base
 
   def get_without_log_without_block
     get(
-      path: "/mypath"
+      path: '/mypath'
     )
   rescue Wor::Requests::RequestError => e
     e
@@ -32,7 +32,7 @@ class SomeService < Wor::Requests::Base
 
   def get_without_log_with_block
     get(
-      path: "/mypath"
+      path: '/mypath'
     ) { |response| JSON.parse(response.body)['array'].reduce('', :+) }
   rescue Wor::Requests::RequestError => e
     e
@@ -40,7 +40,15 @@ class SomeService < Wor::Requests::Base
 
   def get_without_rescue
     get(
-      path: "/mypath"
+      path: '/mypath'
+    )
+  end
+
+  # this fails because of using get with invalid body parameter
+  def get_with_body
+    get(
+      body: { prop: 'value' },
+      path: '/mypath'
     )
   end
 
