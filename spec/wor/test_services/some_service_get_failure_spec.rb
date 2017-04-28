@@ -1,10 +1,10 @@
-require_relative 'github_service'
-require_relative '../../support/mocks/github_failure_responses.rb'
+require_relative 'some_service'
+require_relative '../../support/mocks/failure_responses.rb'
 
-describe GithubService do
+describe SomeService do
   describe 'failure' do
     describe 'get' do
-      include_context 'STUB: github_get_failure_repositories'
+      include_context 'STUB: get_failure'
 
       context 'when calling with attempting_to field defined' do
         context 'when calling with or without block' do
@@ -13,7 +13,7 @@ describe GithubService do
           before do
             Spy.spy(service.logger, 'info')
             Spy.spy(service.logger, 'error')
-            @response = service.repositories_with_log_with_block('enanodr')
+            @response = service.get_with_log_with_block
           end
 
           it 'raises no exception' do
@@ -29,7 +29,7 @@ describe GithubService do
           end
 
           it 'never executes the block' do
-            expect(@response).not_to eq('repo1repo2')
+            expect(@response).not_to eq('helloworld')
           end
 
           it 'returns error with developer message' do
@@ -57,7 +57,7 @@ describe GithubService do
           before do
             Spy.spy(service.logger, 'info')
             Spy.spy(service.logger, 'error')
-            @response = service.repositories_without_log_with_block('enanodr')
+            @response = service.get_without_log_with_block
           end
 
           it 'raises no exception' do
@@ -73,7 +73,7 @@ describe GithubService do
           end
 
           it 'never executes the block' do
-            expect(@response).not_to eq('repo1repo2')
+            expect(@response).not_to eq('helloworld')
           end
 
           it 'returns error with developer message' do
@@ -98,7 +98,7 @@ describe GithubService do
         subject(:service) { described_class.new }
 
         it 'raises exception' do
-          expect{ service.repositories_without_rescue('enanodr') }.to raise_error(Wor::Requests::RequestError)
+          expect{ service.get_without_rescue }.to raise_error(Wor::Requests::RequestError)
         end
       end
     end
