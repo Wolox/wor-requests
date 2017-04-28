@@ -1,8 +1,11 @@
 require_relative 'some_service'
-require_relative '../../support/mocks/successful_responses.rb'
+require_relative '../../support/mocks/responses.rb'
 
 describe SomeService do
   describe 'successful' do
+    # Only testing get method as Wor::Requests::Base http defined methods will
+    # only defer when validating received opts. Then,
+    # Wor::Requests::Base.request call will behave the same for all of them.
     describe 'get' do
       include_context 'STUB: get_successful'
 

@@ -44,12 +44,21 @@ class SomeService < Wor::Requests::Base
     )
   end
 
-  # this fails because of using get with invalid body parameter
-  def get_with_body
+  # this fails because of using get with invalid parameter
+  def get_with_unpermitted_params
     get(
       body: { prop: 'value' },
+      some_unpermitted: 'hello',
+      other_unpermitted: 'world',
       path: '/mypath'
     )
+  end
+
+  # this fails because of using get with invalid parameter
+  def get_with_unpermitted_params_with_rescue
+    get_with_unpermitted_params
+  rescue Wor::Requests::InvalidOptionsError => e
+    e
   end
 
   protected

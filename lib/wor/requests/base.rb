@@ -30,7 +30,9 @@ module Wor
         define_method(method) do |opts = {}, &block|
           method_attributes = constantize("#{method.upcase}_ATTRIBUTES")
           unpermitted_attributes = opts.keys - method_attributes
-          raise Wor::Requests::InvalidOptionsError.new(unpermitted_attributes) unless unpermitted_attributes.empty?
+          unless unpermitted_attributes.empty?
+            raise Wor::Requests::InvalidOptionsError.new(method_attributes, unpermitted_attributes)
+          end
 
           request(opts.merge(method: method), &block)
         end
