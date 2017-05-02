@@ -44,21 +44,29 @@ class SomeService < Wor::Requests::Base
     )
   end
 
-  # this fails because of using get with invalid parameter
-  def get_with_unpermitted_params
-    get(
-      body: { prop: 'value' },
-      some_unpermitted: 'hello',
-      other_unpermitted: 'world',
-      path: '/mypath'
-    )
-  end
+  VALID_HTTP_VERBS = %i(get post patch put delete).freeze
+  VALID_HTTP_VERBS.each do |http_verb|
+    method = "#{http_verb}_with_unpermitted_params"
+    define_method(method) do |opts = {}, &block|
+      # this fails because of using get with invalid parameter
+      self.send(
+        http_verb,
+        body: { prop: 'value' },
+        some_unpermitted: 'hello',
+        other_unpermitted: 'world',
+        path: '/mypath'
+      )
+    end
 
-  # this fails because of using get with invalid parameter
-  def get_with_unpermitted_params_with_rescue
-    get_with_unpermitted_params
-  rescue Wor::Requests::InvalidOptionsError => e
-    e
+    method_with_rescue = "#{http_verb}_with_unpermitted_params_with_rescue"
+    define_method(method_with_rescue) do |opts = {}, &block|
+      begin
+        # this fails because of using get with invalid parameter
+        self.send(method)
+      rescue Wor::Requests::InvalidOptionsError => e
+        e
+      end
+    end
   end
 
   protected
