@@ -1,6 +1,8 @@
 AllCops:
   Exclude:
     - wor-requests.gemspec
+    - spec/**/*
+
 
 Documentation:
   Enabled: false

@@ -6,10 +6,10 @@ require 'json'
 module Wor
   module Requests
     class Base
-      VALID_HTTP_VERBS = %i(get post patch put delete).freeze
+      VALID_HTTP_VERBS = %i[get post patch put delete].freeze
 
       # According to RFC 7231
-      COMMON_ATTRIBUTES = %i(path headers attempting_to response_type).freeze
+      COMMON_ATTRIBUTES = %i[path headers attempting_to response_type].freeze
       HAS_QUERY         = [:query].freeze
       HAS_BODY          = [:body].freeze
       HTTP_COMPLETE     = (COMMON_ATTRIBUTES + HAS_QUERY + HAS_BODY).freeze
@@ -96,8 +96,11 @@ module Wor
 
       def log_error(response, attempting_to)
         return unless present?(attempting_to)
-        response_error = "ERROR when trying to #{attempting_to}. Got status code: #{response.code}, "
-        response_error << "with response error: #{JSON.parse(response.body)}" if present?(response.body)
+        response_error = "ERROR when trying to #{attempting_to}. "
+        response_error << "Got status code: #{response.code}. "
+        if present?(response.body)
+          response_error << "Response error: #{JSON.parse(response.body)}"
+        end
         logger.error response_error
       rescue => e
         logger.error("#{response_error} ERROR while parsing response body: #{e.message}.")
