@@ -5,7 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/Wolox/wor-requests/badges/gpa.svg)](https://codeclimate.com/github/Wolox/wor-requests)
 [![Test Coverage](https://codeclimate.com/github/Wolox/wor-requests/badges/coverage.svg)](https://codeclimate.com/github/Wolox/wor-requests/coverage)
 
-This gem lets you easily add to your service objects the ability to make external requests, logging everything so you don't have to worry about that.
+Make external requests in you service objects, with easy logging and error handling!
 
 ## Installation
 
@@ -74,14 +74,14 @@ Or, even easier, run `rails generate wor:requests:service NAME` in your Rails ro
 
 ## About ##
 
-This project is maintained by [Diego Raffo](https://github.com/enanodr) and it was written by [Wolox](http://www.wolox.com.ar).
+This project is maintained by [Diego Raffo](https://github.com/enanodr) along with [Michel Agopian](https://github.com/mishuagopian) and it was written by [Wolox](http://www.wolox.com.ar).
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
 ## License
 
 **wor-requests** is available under the MIT [license](https://raw.githubusercontent.com/Wolox/wor-requests/master/LICENSE.md).
 
-    Copyright (c) 2016 Diego Raffo, aka enanodr
+    Copyright (c) 2017 [Wolox](http://www.wolox.com.ar)
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
