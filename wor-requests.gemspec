@@ -9,11 +9,11 @@ Gem::Specification.new do |spec|
   spec.version       = Wor::Requests::VERSION
   spec.platform      = Gem::Platform::RUBY
   spec.date          = Date.today
-  spec.authors       = ['draffo']
-  spec.email         = ['diego.raffo@wolox.com.ar']
+  spec.authors       = ['draffo', 'mishuagopian']
+  spec.email         = ['diego.raffo@wolox.com.ar', 'michel.agopian@wolox.com.ar']
 
-  spec.summary       = 'This gem lets you easily add to your service objects the ability to make external requests'
-  spec.description   = 'This gem lets you easily add to your service objects the ability to make external requests, logging everything so you don\'t have to worry about that.'
+  spec.summary       = 'Make external requests in you service objects, with easy logging and error handling!'
+  spec.description   = 'Make external requests in you service objects, with easy logging and error handling!'
   spec.homepage      = 'https://github.com/Wolox/wor-requests'
   spec.license       = 'MIT'
 
