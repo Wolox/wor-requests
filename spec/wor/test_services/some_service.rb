@@ -44,8 +44,7 @@ class SomeService < Wor::Requests::Base
     )
   end
 
-  VALID_HTTP_VERBS = %i(get post patch put delete).freeze
-  VALID_HTTP_VERBS.each do |http_verb|
+  Wor::Requests::Base::VALID_HTTP_VERBS.each do |http_verb|
     method = "#{http_verb}_with_unpermitted_params"
     define_method(method) do |opts = {}, &block|
       # this fails because of using get with invalid parameter
