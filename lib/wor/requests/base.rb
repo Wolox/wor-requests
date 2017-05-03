@@ -28,11 +28,13 @@ module Wor
       #   - delete(opts = {}, &block)
       VALID_HTTP_VERBS.each do |method|
         define_method(method) do |opts = {}, &block|
-          request(
-            opts.select { |k, _v| constantize("#{method.upcase}_ATTRIBUTES").include?(k) }
-                .merge(method: method),
-            &block
-          )
+          method_attributes = constantize("#{method.upcase}_ATTRIBUTES")
+          unpermitted_attributes = opts.keys - method_attributes
+          unless unpermitted_attributes.empty?
+            raise Wor::Requests::InvalidOptionsError.new(method_attributes, unpermitted_attributes)
+          end
+
+          request(opts.merge(method: method), &block)
         end
       end
 
@@ -44,6 +46,10 @@ module Wor
 
         return after_success(resp, options, &block) if resp.success?
         after_error(resp, options)
+      end
+
+      def logger
+        Wor::Requests.logger
       end
 
       protected
@@ -89,10 +95,6 @@ module Wor
         path
       end
 
-      def logger
-        Wor::Requests.logger
-      end
-
       def log_success(attempt)
         return unless present?(attempt)
         logger.info "SUCCESS: #{attempt}"
@@ -105,15 +107,18 @@ module Wor
 
       def log_error(response, attempting_to)
         return unless present?(attempting_to)
-        response_error = "ERROR when trying to #{attempting_to}. Status code: #{response.code}. "
-        response_error << "Response error: #{JSON.parse(response.body)}" if present?(response.body)
+        response_error = "ERROR when trying to #{attempting_to}. "
+        response_error << "Got status code: #{response.code}. "
+        if present?(response.body)
+          response_error << "Response error: #{JSON.parse(response.body)}"
+        end
         logger.error response_error
       rescue => e
         logger.error("#{response_error} ERROR while parsing response body: #{e.message}.")
       end
 
       def exception_message
-        "#{external_api_name} communication error. See logs for more information."
+        "#{external_api_name} got an error. See logs for more information."
       end
 
       def request_parameters(options_hash)
