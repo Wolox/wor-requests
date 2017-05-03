@@ -4,7 +4,7 @@ require 'wor/requests/version'
 require 'logger'
 
 class SomeService < Wor::Requests::Base
-  def get_with_log_without_block
+  def method_with_log_without_block
     get(
       attempting_to: 'attempting_to get mypath',
       path: '/mypath'
@@ -13,7 +13,7 @@ class SomeService < Wor::Requests::Base
     e
   end
 
-  def get_with_log_with_block
+  def method_with_log_with_block
     get(
       attempting_to: 'attempting_to get mypath',
       path: '/mypath'
@@ -22,7 +22,7 @@ class SomeService < Wor::Requests::Base
     e
   end
 
-  def get_without_log_without_block
+  def method_without_log_without_block
     get(
       path: '/mypath'
     )
@@ -30,7 +30,7 @@ class SomeService < Wor::Requests::Base
     e
   end
 
-  def get_without_log_with_block
+  def method_without_log_with_block
     get(
       path: '/mypath'
     ) { |response| JSON.parse(response.body)['array'].reduce('', :+) }
@@ -38,7 +38,7 @@ class SomeService < Wor::Requests::Base
     e
   end
 
-  def get_without_rescue
+  def method_without_rescue
     get(
       path: '/mypath'
     )
@@ -46,9 +46,9 @@ class SomeService < Wor::Requests::Base
 
   Wor::Requests::Base::VALID_HTTP_VERBS.each do |http_verb|
     method = "#{http_verb}_with_unpermitted_params"
-    define_method(method) do |opts = {}, &block|
+    define_method(method) do |_opts = {}, &_block|
       # this fails because of using get with invalid parameter
-      self.send(
+      send(
         http_verb,
         body: { prop: 'value' },
         some_unpermitted: 'hello',
@@ -58,10 +58,10 @@ class SomeService < Wor::Requests::Base
     end
 
     method_with_rescue = "#{http_verb}_with_unpermitted_params_with_rescue"
-    define_method(method_with_rescue) do |opts = {}, &block|
+    define_method(method_with_rescue) do |_opts = {}, &_block|
       begin
         # this fails because of using get with invalid parameter
-        self.send(method)
+        send(method)
       rescue Wor::Requests::InvalidOptionsError => e
         e
       end

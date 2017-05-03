@@ -1,6 +1,7 @@
 require 'wor/requests/invalid_options_error'
 require_relative '../some_service'
 
+# rubocop:disable BlockLength
 describe SomeService do
   describe 'failure' do
     describe 'delete' do
@@ -9,7 +10,9 @@ describe SomeService do
 
         context 'without rescue' do
           it 'raises exception' do
-            expect{ service.delete_with_unpermitted_params }.to raise_error(Wor::Requests::InvalidOptionsError)
+            expect { service.delete_with_unpermitted_params }.to raise_error(
+              Wor::Requests::InvalidOptionsError
+            )
           end
         end
 

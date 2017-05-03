@@ -2,6 +2,7 @@ require 'wor/requests/invalid_options_error'
 require_relative 'some_service'
 require_relative '../../support/mocks/responses.rb'
 
+# rubocop:disable BlockLength
 describe SomeService do
   describe 'failure' do
     # Only testing get method as Wor::Requests::Base http defined methods will
@@ -17,11 +18,11 @@ describe SomeService do
           before do
             Spy.spy(service.logger, 'info')
             Spy.spy(service.logger, 'error')
-            @response = service.get_with_log_with_block
+            @response = service.method_with_log_with_block
           end
 
           it 'raises no exception' do
-            expect{ @response }.not_to raise_error
+            expect { @response }.not_to raise_error
           end
 
           it 'logger.info has been called once' do
@@ -37,11 +38,13 @@ describe SomeService do
           end
 
           it 'returns error with developer message' do
-            expect(@response.message).to eq("#{described_class} got an error. See logs for more information.")
+            expect(
+              @response.message
+            ).to eq("#{described_class} got an error. See logs for more information.")
           end
 
           it 'returns error with response property' do
-              expect(@response.response).not_to be_nil
+            expect(@response.response).not_to be_nil
           end
 
           it 'returns error with response property which has code' do
@@ -61,11 +64,11 @@ describe SomeService do
           before do
             Spy.spy(service.logger, 'info')
             Spy.spy(service.logger, 'error')
-            @response = service.get_without_log_with_block
+            @response = service.method_without_log_with_block
           end
 
           it 'raises no exception' do
-            expect{ @response }.not_to raise_error
+            expect { @response }.not_to raise_error
           end
 
           it 'logger.info should not have been called' do
@@ -81,11 +84,13 @@ describe SomeService do
           end
 
           it 'returns error with developer message' do
-            expect(@response.message).to eq("#{described_class} got an error. See logs for more information.")
+            expect(
+              @response.message
+            ).to eq("#{described_class} got an error. See logs for more information.")
           end
 
           it 'returns error with response property' do
-              expect(@response.response).not_to be_nil
+            expect(@response.response).not_to be_nil
           end
 
           it 'returns error with response property which has code' do
@@ -102,7 +107,7 @@ describe SomeService do
         subject(:service) { described_class.new }
 
         it 'raises exception' do
-          expect{ service.get_without_rescue }.to raise_error(Wor::Requests::RequestError)
+          expect { service.method_without_rescue }.to raise_error(Wor::Requests::RequestError)
         end
       end
     end

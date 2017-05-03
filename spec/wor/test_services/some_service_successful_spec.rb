@@ -1,6 +1,7 @@
 require_relative 'some_service'
 require_relative '../../support/mocks/responses.rb'
 
+# rubocop:disable BlockLength
 describe SomeService do
   describe 'successful' do
     # Only testing get method as Wor::Requests::Base http defined methods will
@@ -15,11 +16,11 @@ describe SomeService do
 
           before do
             Spy.spy(service.logger, 'info')
-            @response = service.get_with_log_without_block
+            @response = service.method_with_log_without_block
           end
 
           it 'raises no exception' do
-            expect{ @response }.not_to raise_error
+            expect { @response }.not_to raise_error
           end
 
           it 'logger.info has been called twice' do
@@ -31,7 +32,7 @@ describe SomeService do
           end
 
           it 'returns array with array format' do
-            expect(@response['array']).to eq(%w[hello world])
+            expect(@response['array']).to eq(%w(hello world))
           end
         end
 
@@ -40,11 +41,11 @@ describe SomeService do
 
           before do
             Spy.spy(service.logger, 'info')
-            @response = service.get_with_log_with_block
+            @response = service.method_with_log_with_block
           end
 
           it 'raises no exception' do
-            expect{ @response }.not_to raise_error
+            expect { @response }.not_to raise_error
           end
 
           it 'logger.info has been called twice' do
@@ -63,11 +64,11 @@ describe SomeService do
 
           before do
             Spy.spy(service.logger, 'info')
-            @response = service.get_without_log_without_block
+            @response = service.method_without_log_without_block
           end
 
           it 'raises no exception' do
-            expect{ @response }.not_to raise_error
+            expect { @response }.not_to raise_error
           end
 
           it 'logger.info should not have been called' do
@@ -79,7 +80,7 @@ describe SomeService do
           end
 
           it 'returns array with array format' do
-            expect(@response['array']).to eq(%w[hello world])
+            expect(@response['array']).to eq(%w(hello world))
           end
         end
 
@@ -88,11 +89,11 @@ describe SomeService do
 
           before do
             Spy.spy(service.logger, 'info')
-            @response = service.get_without_log_with_block
+            @response = service.method_without_log_with_block
           end
 
           it 'raises no exception' do
-            expect{ @response }.not_to raise_error
+            expect { @response }.not_to raise_error
           end
 
           it 'logger.info should not have been called' do
