@@ -81,7 +81,7 @@ This project is maintained by [Diego Raffo](https://github.com/enanodr) along wi
 
 **wor-requests** is available under the MIT [license](https://raw.githubusercontent.com/Wolox/wor-requests/master/LICENSE.md).
 
-    Copyright (c) 2017 [Wolox](http://www.wolox.com.ar)
+    Copyright (c) 2017 Wolox
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
