@@ -95,7 +95,7 @@ describe SomeService do
             expect{ @response }.not_to raise_error
           end
 
-          it 'logger.info has been called twice' do
+          it 'logger.info should not have been called' do
             expect(service.logger.spied_info_counter).to be(0)
           end
 

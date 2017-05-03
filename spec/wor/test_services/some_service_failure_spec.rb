@@ -68,11 +68,11 @@ describe SomeService do
             expect{ @response }.not_to raise_error
           end
 
-          it 'logger.info has been called once' do
+          it 'logger.info should not have been called' do
             expect(service.logger.spied_info_counter).to be(0)
           end
 
-          it 'logger.error has been called once' do
+          it 'logger.error should not have been called' do
             expect(service.logger.spied_error_counter).to be(0)
           end
 
