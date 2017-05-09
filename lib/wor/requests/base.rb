@@ -85,12 +85,12 @@ module Wor
       end
 
       def formatted_base_url
-        base_url.last != '/' ? "#{base_url}/" : base_url
+        base_url[-1] != '/' ? "#{base_url}/" : base_url
       end
 
       def formatted_path(path)
         return '' if path.nil?
-        return path if path.first != '/'
+        return path if path[0] != '/'
         path.slice!(0)
         path
       end
