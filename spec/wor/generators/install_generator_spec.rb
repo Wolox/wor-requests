@@ -12,9 +12,9 @@ describe Wor::Requests::Generators::InstallGenerator, type: :generator do
 
     it 'generates the correct structure for initializer' do
       expect(destination_root).to have_structure do
-        no_file 'wor_requets.rb'
+        no_file 'wor_requests.rb'
         directory 'config' do
-          no_file 'wor_requets.rb'
+          no_file 'wor_requests.rb'
           directory 'initializers' do
             file 'wor_requests.rb' do
               contains 'Wor::Requests.configure do'
