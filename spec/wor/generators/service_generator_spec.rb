@@ -11,18 +11,20 @@ describe Wor::Requests::Generators::ServiceGenerator, type: :generator do
       run_generator
     end
 
+    # rubocop:disable Style/BlockDelimiters
     it 'generates the correct structure for the service' do
-      expect(destination_root).to have_structure do
+      expect(destination_root).to(have_structure {
         no_file 'books_service.rb'
         directory 'app' do
           no_file 'books_service.rb'
           directory 'services' do
-            file 'books_services.rb' do
-              contains 'class BooksService < Wor::Requests::Base'
+            file 'books_service.rb' do
+              contains 'class BookService < Wor::Requests::Base'
             end
           end
         end
-      end
+      })
     end
+    # rubocop:enable Style/BlockDelimiters
   end
 end

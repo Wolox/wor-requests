@@ -10,8 +10,9 @@ describe Wor::Requests::Generators::InstallGenerator, type: :generator do
       run_generator
     end
 
+    # rubocop:disable Style/BlockDelimiters
     it 'generates the correct structure for initializer' do
-      expect(destination_root).to have_structure do
+      expect(destination_root).to(have_structure {
         no_file 'wor_requests.rb'
         directory 'config' do
           no_file 'wor_requests.rb'
@@ -21,7 +22,8 @@ describe Wor::Requests::Generators::InstallGenerator, type: :generator do
             end
           end
         end
-      end
+      })
     end
+    # rubocop:enable Style/BlockDelimiters
   end
 end
