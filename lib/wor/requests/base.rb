@@ -2,6 +2,8 @@ require 'uri'
 require 'httparty'
 require 'json'
 
+require 'wor/requests/invalid_options_error'
+
 # rubocop:disable ClassLength
 module Wor
   module Requests
@@ -28,14 +30,19 @@ module Wor
       #   - delete(opts = {}, &block)
       VALID_HTTP_VERBS.each do |method|
         define_method(method) do |opts = {}, &block|
+          raise MethodNotPermittedError, method unless permitted_methods.include? method
           method_attributes = constantize("#{method.upcase}_ATTRIBUTES")
           unpermitted_attributes = opts.keys - method_attributes
           unless unpermitted_attributes.empty?
-            raise Wor::Requests::InvalidOptionsError.new(method_attributes, unpermitted_attributes)
+            raise InvalidOptionsError.new(method_attributes, unpermitted_attributes)
           end
 
           request(opts.merge(method: method), &block)
         end
+      end
+
+      def permitted_methods
+        VALID_HTTP_VERBS
       end
 
       def request(options = {}, &block)
