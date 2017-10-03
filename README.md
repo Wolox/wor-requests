@@ -62,6 +62,36 @@ puts GithubService.new.repositories('alebian')
 
 Or, even easier, run `rails generate wor:requests:service NAME` in your Rails root
 
+
+If you work with Authorization token you can write something like this:
+
+```ruby
+require 'wor/requests'
+
+class ExternalService < Wor::Requests::Base
+  def request_to_post(authorization)
+    post(
+      attempting_to: 'post to an external service',
+      path: '/some_endpoint',
+      headers: {
+        Authorization: authorization
+      },
+      body: {
+        # Some Json
+      }
+    )
+  end
+
+  protected
+
+  def base_url
+    'https://external.service.com'
+  end
+end
+
+ExternalService.new.request_to_post(token)
+```
+
 ## Contributing
 
 1. Fork it
