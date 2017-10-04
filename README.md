@@ -74,7 +74,8 @@ class ExternalService < Wor::Requests::Base
       attempting_to: 'Make a POST request to an external service.',
       path: '/some_endpoint',
       headers: {
-        Authorization: authorization
+        Authorization: authorization,
+        'Content-type' => 'application/json'
       },
       body: {
         # Some Json
