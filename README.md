@@ -62,6 +62,37 @@ puts GithubService.new.repositories('alebian')
 
 Or, even easier, run `rails generate wor:requests:service NAME` in your Rails root
 
+
+If you need to send body parameters in a post request you can write something like this:
+
+```ruby
+require 'wor/requests'
+
+class ExternalService < Wor::Requests::Base
+  def post_request_example(authorization)
+    post(
+      attempting_to: 'Make a POST request to an external service.',
+      path: '/some_endpoint',
+      headers: {
+        Authorization: authorization,
+        'Content-type' => 'application/json'
+      },
+      body: {
+        # Some Json
+      }
+    )
+  end
+
+  protected
+
+  def base_url
+    'https://external.service.com'
+  end
+end
+
+ExternalService.new.post_request_example(token)
+```
+
 ## Contributing
 
 1. Fork it
