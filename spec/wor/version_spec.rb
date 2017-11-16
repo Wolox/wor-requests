@@ -8,6 +8,6 @@ describe Wor::Requests::VERSION do
   end
 
   it 'has the correct version number' do
-    expect(version).to eq('0.1.0')
+    expect(version).to eq('0.1.1')
   end
 end
