@@ -28,14 +28,43 @@ module Wor
       #   - delete(opts = {}, &block)
       VALID_HTTP_VERBS.each do |method|
         define_method(method) do |opts = {}, &block|
-          method_attributes = constantize("#{method.upcase}_ATTRIBUTES")
-          unpermitted_attributes = opts.keys - method_attributes
-          unless unpermitted_attributes.empty?
-            raise Wor::Requests::InvalidOptionsError.new(method_attributes, unpermitted_attributes)
-          end
-
+          validate(opts)
           request(opts.merge(method: method), &block)
         end
+        define_method("enqueue_#{method}") do |opts = {}, &block|
+          validate(opts)
+          build_and_enqueue_request(opts.merge(method: method), &block)
+        end
+      end
+
+      def validate(opts)
+        method_attributes = constantize("#{method.upcase}_ATTRIBUTES")
+        unpermitted_attributes = opts.keys - method_attributes
+        unless unpermitted_attributes.empty?
+          raise Wor::Requests::InvalidOptionsError.new(method_attributes, unpermitted_attributes)
+        end
+
+      end
+
+      def build_and_enqueue_request(options, &block)
+        uuid = SecureRandom.uuid
+        req = Typhoeus::Request.new(uri(options[:path]), request_parameters(options), method: options[:method], followlocation: true)
+        req.on_compleated do |response|
+          return log_error(response, options[:attempting_to]) unless response.success?
+          class << response
+            attr_accessor :processed_response
+          end
+          response.processed_response = after_success(response, options, &block)
+        end
+        @hydra.queue(req)
+        pending_requests[uuid] = [req]
+        uuid
+      end
+
+      def perform_pending_requests
+        @hydra.run
+        made_requests.merge(pending_requests)
+        @hydra.dequeue_many
       end
 
       def request(options = {}, &block)
@@ -53,6 +82,18 @@ module Wor
       end
 
       protected
+
+      def hydra
+        @hydra ||= Typhoeus::Hydra.new
+      end
+
+      def pending_requests
+        @pending_requests ||= { }
+      end
+
+      def made_requests
+        @made_requests ||= { }
+      end
 
       def base_url
         raise NoMethodError, "Subclass must implement method: '#{__method__}'"

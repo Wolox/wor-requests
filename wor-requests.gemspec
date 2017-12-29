@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec)/})
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'typhoeus'
   spec.add_dependency 'httparty', '~> 0.13'
   spec.add_dependency 'railties', '>= 4.1.0', '< 5.2'
 
