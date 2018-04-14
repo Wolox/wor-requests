@@ -1,14 +1,17 @@
 require_relative 'requests/base'
 require_relative 'requests/request_error'
 require_relative 'requests/version'
+require_relative 'requests/utils'
 require 'logger'
 
 module Wor
   module Requests
+    extend Wor::Requests::Utils
+
     VALID_RESPONSE_TYPES = [:json].freeze
 
     @config = {
-      logger: Logger.new(STDOUT),
+      logger: Logger.new(open_file(File.join(root_path, 'log', 'wor_requests.log'), 'a')),
       default_response_type: :json
     }
 
