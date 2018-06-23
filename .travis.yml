@@ -14,3 +14,6 @@ script:
   - bundle exec rspec
   - bundle exec rubocop -R --format simple
   - bundle exec codeclimate-test-reporter
+
+notifications:
+  email: false
