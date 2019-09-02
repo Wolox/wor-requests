@@ -1,12 +1,13 @@
 language: ruby
 rvm:
-  - 2.2.2
-  - 2.3.3
-  - 2.4.0
+  - 2.3.8
+  - 2.4.6
+  - 2.5.5
+  - 2.6.3
 
-install:
+before_install:
+  - gem update --system
   - gem install bundler
-  - bundle install --retry=3
 
 script:
   - bundle exec rspec
