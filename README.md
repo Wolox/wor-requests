@@ -104,8 +104,12 @@ ExternalService.new.post_request_example(token)
 7. Create a new Pull Request
 
 ## About ##
+This project was developed by [Diego Raffo](https://github.com/enanodr) along with [Michel Agopian](https://github.com/mishuagopian) and it was written by [Wolox](http://www.wolox.com.ar).
 
-This project is maintained by [Diego Raffo](https://github.com/enanodr) along with [Michel Agopian](https://github.com/mishuagopian) and it was written by [Wolox](http://www.wolox.com.ar).
+Maintainers: [Samir Tapiero](https://github.com/blacksam07)
+
+Contributors: [Diego Raffo](https://github.com/enanodr) [Michel Agopian](https://github.com/mishuagopian)
+
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
 ## License
