@@ -12,13 +12,13 @@ describe SomeService do
       include_context 'STUB: get_head_successful'
 
       context 'when calling with attempting_to field defined' do
+        before do
+          Spy.spy(service.logger, 'info')
+          @response = service.method_with_log_without_block
+        end
+
         context 'when calling without block' do
           subject(:service) { described_class.new }
-
-          before do
-            Spy.spy(service.logger, 'info')
-            @response = service.method_with_log_without_block
-          end
 
           it 'raises no exception' do
             expect { @response }.not_to raise_error
@@ -31,11 +31,6 @@ describe SomeService do
 
         context 'when calling with block' do
           subject(:service) { described_class.new }
-
-          before do
-            Spy.spy(service.logger, 'info')
-            @response = service.method_with_log_with_block
-          end
 
           it 'raises no exception' do
             expect { @response }.not_to raise_error
@@ -48,13 +43,13 @@ describe SomeService do
       end
 
       context 'when calling without attempting_to field defined' do
+        before do
+          Spy.spy(service.logger, 'info')
+          @response = service.method_without_log_without_block
+        end
+
         context 'when calling without block' do
           subject(:service) { described_class.new }
-
-          before do
-            Spy.spy(service.logger, 'info')
-            @response = service.method_without_log_without_block
-          end
 
           it 'raises no exception' do
             expect { @response }.not_to raise_error
@@ -67,11 +62,6 @@ describe SomeService do
 
         context 'when calling with block' do
           subject(:service) { described_class.new }
-
-          before do
-            Spy.spy(service.logger, 'info')
-            @response = service.method_without_log_with_block
-          end
 
           it 'raises no exception' do
             expect { @response }.not_to raise_error
