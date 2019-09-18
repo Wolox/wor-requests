@@ -6,10 +6,10 @@ require 'json'
 module Wor
   module Requests
     class Base
-      VALID_HTTP_VERBS = %i(get post patch put delete).freeze
+      VALID_HTTP_VERBS = %i[get post patch put delete].freeze
 
       # According to RFC 7231
-      COMMON_ATTRIBUTES = %i(path headers attempting_to response_type).freeze
+      COMMON_ATTRIBUTES = %i[path headers attempting_to response_type].freeze
       HAS_QUERY         = [:query].freeze
       HAS_BODY          = [:body].freeze
       HTTP_COMPLETE     = (COMMON_ATTRIBUTES + HAS_QUERY + HAS_BODY).freeze
@@ -45,6 +45,7 @@ module Wor
         resp = HTTParty.send(options[:method], uri(options[:path]), request_parameters(options))
 
         return after_success(resp, options, &block) if resp.success?
+
         after_error(resp, options)
       end
 
@@ -72,6 +73,7 @@ module Wor
         log_success(options[:attempting_to])
 
         return yield(response) if block_given?
+
         handle_response(response, options[:response_type])
       end
 
@@ -85,35 +87,39 @@ module Wor
       end
 
       def formatted_base_url
+        raise NoMethodError, 'The method base_url is malformed' if base_url.nil?
+
         base_url[-1] != '/' ? "#{base_url}/" : base_url
       end
 
       def formatted_path(path)
         return '' if path.nil?
         return path if path[0] != '/'
+
         path.slice!(0)
         path
       end
 
       def log_success(attempt)
         return unless present?(attempt)
+
         logger.info "SUCCESS: #{attempt}"
       end
 
       def log_attempt(attempt)
         return unless present?(attempt)
+
         logger.info "ATTEMPTING TO: #{attempt}"
       end
 
       def log_error(response, attempting_to)
         return unless present?(attempting_to)
+
         response_error = "ERROR when trying to #{attempting_to}. "
         response_error << "Got status code: #{response.code}. "
-        if present?(response.body)
-          response_error << "Response error: #{JSON.parse(response.body)}"
-        end
+        response_error << "Response error: #{JSON.parse(response.body)}" if present?(response.body)
         logger.error response_error
-      rescue => e
+      rescue JSON::ParserError => e
         logger.error("#{response_error} ERROR while parsing response body: #{e.message}.")
       end
 
@@ -139,11 +145,13 @@ module Wor
 
       def validate_method!(method)
         return true if VALID_HTTP_VERBS.include?(method)
+
         raise ArgumentError, "#{method} is not a valid method."
       end
 
       def response_type(type)
         return type if Wor::Requests::VALID_RESPONSE_TYPES.include?(type)
+
         default_response_type
       end
 

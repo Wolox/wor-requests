@@ -22,6 +22,7 @@ module Wor
 
     def self.default_response_type=(type)
       return unless VALID_RESPONSE_TYPES.include?(type)
+
       @config[:default_response_type] = type
     end
 
