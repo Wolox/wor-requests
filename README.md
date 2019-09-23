@@ -1,9 +1,6 @@
 # Wolox on Rails - Requests
 [![Gem Version](https://badge.fury.io/rb/wor-requests.svg)](https://badge.fury.io/rb/wor-requests)
-[![Dependency Status](https://gemnasium.com/badges/github.com/Wolox/wor-requests.svg)](https://gemnasium.com/github.com/Wolox/wor-requests)
-[![Build Status](https://travis-ci.org/Wolox/wor-requests.svg)](https://travis-ci.org/Wolox/wor-requests)
 [![Code Climate](https://codeclimate.com/github/Wolox/wor-requests/badges/gpa.svg)](https://codeclimate.com/github/Wolox/wor-requests)
-[![Test Coverage](https://codeclimate.com/github/Wolox/wor-requests/badges/coverage.svg)](https://codeclimate.com/github/Wolox/wor-requests/coverage)
 
 Make external requests in you service objects, with easy logging and error handling!
 
@@ -61,6 +58,10 @@ puts GithubService.new.repositories('alebian')
 ```
 
 Or, even easier, run `rails generate wor:requests:service NAME` in your Rails root
+#### options in service generator
+- module
+
+  `rails generate wor:requests:service NAME --module MODULE_NAME`
 
 
 If you need to send body parameters in a post request you can write something like this:
