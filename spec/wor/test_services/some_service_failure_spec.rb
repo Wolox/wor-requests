@@ -110,6 +110,18 @@ describe SomeService do
           expect { service.method_without_rescue }.to raise_error(Wor::Requests::RequestError)
         end
       end
+
+      context 'when base_url malformed defined' do
+        subject(:service) { described_class.new(base_url_empty: true) }
+
+        before do
+          Spy.spy(service.logger, 'info')
+        end
+
+        it 'returns error with developer message' do
+          expect { service.method_with_log_with_block }.to raise_error
+        end
+      end
     end
   end
 end

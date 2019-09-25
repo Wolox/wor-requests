@@ -4,6 +4,12 @@ require 'wor/requests/version'
 require 'logger'
 
 class SomeService < Wor::Requests::Base
+  attr_accessor :base_url_empty
+
+  def initialize(params = {})
+    @base_url_empty = params.fetch(:base_url_empty, false)
+  end
+
   def method_with_log_without_block
     get(
       attempting_to: 'attempting_to get mypath',
@@ -71,6 +77,6 @@ class SomeService < Wor::Requests::Base
   protected
 
   def base_url
-    'https://baseurl.com'
+    'https://baseurl.com' unless base_url_empty
   end
 end
