@@ -1,5 +1,6 @@
-<% if @module_name.present? %>module <%= @module_name.camelize %><% end %>
-<% if @module_name.present? %>  <% end %>class <%= class_name %>Service < Wor::Requests::Base
+<% if @module_name.present? %>module <%= @module_name.camelize %>
+  class <%= class_name %>Service < Wor::Requests::Base
+<% else %> class <%= class_name %>Service < Wor::Requests::Base<% end %>
 <% if @module_name.present? %>  <% end %>  # An example of how to get all repositories for the specified user in github.com
 <% if @module_name.present? %>  <% end %>  # def repositories(username)
 <% if @module_name.present? %>  <% end %>  #   get(
@@ -16,4 +17,5 @@
 <% if @module_name.present? %>  <% end %>  #   'https://api.github.com'
 <% if @module_name.present? %>  <% end %>  # end
 <% if @module_name.present? %>  <% end %>end
-<% if @module_name.present? %>end<% end %>
+<% if @module_name.present? %>end
+<% end %>

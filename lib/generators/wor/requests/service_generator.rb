@@ -15,7 +15,7 @@ module Wor
             #{("/#{@module_name.underscore}" if @module_name.present?)}"
           generator_path = "#{generator_dir_path}/#{file_name}_service.rb"
 
-          Dir.mkdir(generator_dir_path) unless File.exist?(generator_dir_path)
+          FileUtils.mkdir_p(generator_dir_path) unless File.exist?(generator_dir_path)
 
           template 'base_service.rb.erb', generator_path
         end
