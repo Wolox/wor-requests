@@ -10,6 +10,7 @@ describe SomeService do
     # Wor::Requests::Base.request call will behave the same for all of them.
     describe 'get' do
       include_context 'STUB: get_head_successful'
+      subject(:service) { described_class.new }
 
       context 'when calling with attempting_to field defined' do
         before do
@@ -18,8 +19,6 @@ describe SomeService do
         end
 
         context 'when calling without block' do
-          subject(:service) { described_class.new }
-
           it 'raises no exception' do
             expect { @response }.not_to raise_error
           end
@@ -30,8 +29,6 @@ describe SomeService do
         end
 
         context 'when calling with block' do
-          subject(:service) { described_class.new }
-
           it 'raises no exception' do
             expect { @response }.not_to raise_error
           end
@@ -49,8 +46,6 @@ describe SomeService do
         end
 
         context 'when calling without block' do
-          subject(:service) { described_class.new }
-
           it 'raises no exception' do
             expect { @response }.not_to raise_error
           end
@@ -61,8 +56,6 @@ describe SomeService do
         end
 
         context 'when calling with block' do
-          subject(:service) { described_class.new }
-
           it 'raises no exception' do
             expect { @response }.not_to raise_error
           end
