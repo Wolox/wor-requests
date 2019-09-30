@@ -18,7 +18,7 @@ class SomeService < Wor::Requests::Base
       attempting_to: 'attempting_to get mypath',
       path: '/mypath'
     ) do |response|
-      JSON.parse(response.body)['array'].reduce('', :+) if response.body.present?
+      parse_response(response)
     end
   rescue Wor::Requests::RequestError => e
     e
@@ -36,7 +36,7 @@ class SomeService < Wor::Requests::Base
     get(
       path: '/mypath'
     ) do |response|
-      JSON.parse(response.body)['array'].reduce('', :+) if response.body.present?
+      parse_response(response)
     end
   rescue Wor::Requests::RequestError => e
     e
@@ -76,5 +76,11 @@ class SomeService < Wor::Requests::Base
 
   def base_url
     'https://baseurl.com'
+  end
+
+  private
+
+  def parse_response(response)
+    JSON.parse(response.body)['array'].reduce('', :+) if response.body.present?
   end
 end
