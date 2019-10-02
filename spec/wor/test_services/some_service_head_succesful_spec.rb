@@ -18,24 +18,12 @@ describe SomeService do
           @response = service.method_with_log_without_block
         end
 
-        context 'when calling without block' do
-          it 'raises no exception' do
-            expect { @response }.not_to raise_error
-          end
-
-          it 'logger.info has been called twice' do
-            expect(service.logger.spied_info_counter).to be(2)
-          end
+        it 'raises no exception' do
+          expect { @response }.not_to raise_error
         end
 
-        context 'when calling with block' do
-          it 'raises no exception' do
-            expect { @response }.not_to raise_error
-          end
-
-          it 'logger.info has been called twice' do
-            expect(service.logger.spied_info_counter).to be(2)
-          end
+        it 'logger.info has been called twice' do
+          expect(service.logger.spied_info_counter).to be(2)
         end
       end
 
@@ -45,24 +33,12 @@ describe SomeService do
           @response = service.method_without_log_without_block
         end
 
-        context 'when calling without block' do
-          it 'raises no exception' do
-            expect { @response }.not_to raise_error
-          end
-
-          it 'logger.info should not have been called' do
-            expect(service.logger.spied_info_counter).to be(0)
-          end
+        it 'raises no exception' do
+          expect { @response }.not_to raise_error
         end
 
-        context 'when calling with block' do
-          it 'raises no exception' do
-            expect { @response }.not_to raise_error
-          end
-
-          it 'logger.info should not have been called' do
-            expect(service.logger.spied_info_counter).to be(0)
-          end
+        it 'logger.info should not have been called' do
+          expect(service.logger.spied_info_counter).to be(0)
         end
       end
     end
