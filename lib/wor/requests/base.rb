@@ -150,7 +150,7 @@ module Wor
       def handle_response(response, response_type)
         case response_type(response_type)
         when :json
-          JSON.parse(response.body)
+          JSON.parse(response.body) if response.body.present?
         else
           response.body
         end
