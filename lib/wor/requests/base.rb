@@ -87,7 +87,7 @@ module Wor
       end
 
       def formatted_base_url
-        raise NoMethodError, 'The method base_url is malformed' if base_url.nil?
+        raise MalformedBaseUrl if base_url.nil?
 
         base_url[-1] != '/' ? "#{base_url}/" : base_url
       end

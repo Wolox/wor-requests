@@ -1,5 +1,6 @@
 require_relative 'requests/base'
 require_relative 'requests/request_error'
+require_relative 'requests/malformed_base_url'
 require_relative 'requests/version'
 require 'logger'
 

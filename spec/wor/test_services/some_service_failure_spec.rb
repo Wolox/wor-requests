@@ -119,7 +119,9 @@ describe SomeService do
         end
 
         it 'returns error with developer message' do
-          expect { service.method_with_log_with_block }.to raise_error
+          expect do
+            service.method_with_log_with_block
+          end.to raise_error(Wor::Requests::MalformedBaseUrl)
         end
       end
     end
