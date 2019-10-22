@@ -10,6 +10,6 @@ before_install:
   - gem install bundler
 
 script:
+  - bundle exec rubocop lib spec -R --format simple
   - bundle exec rspec
-  - bundle exec rubocop -R --format simple
   - bundle exec codeclimate-test-reporter
