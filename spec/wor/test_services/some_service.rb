@@ -17,7 +17,9 @@ class SomeService < Wor::Requests::Base
     get(
       attempting_to: 'attempting_to get mypath',
       path: '/mypath'
-    ) { |response| JSON.parse(response.body)['array'].reduce('', :+) }
+    ) do |response|
+      parse_response(response)
+    end
   rescue Wor::Requests::RequestError => e
     e
   end
@@ -33,7 +35,9 @@ class SomeService < Wor::Requests::Base
   def method_without_log_with_block
     get(
       path: '/mypath'
-    ) { |response| JSON.parse(response.body)['array'].reduce('', :+) }
+    ) do |response|
+      parse_response(response)
+    end
   rescue Wor::Requests::RequestError => e
     e
   end
@@ -72,5 +76,11 @@ class SomeService < Wor::Requests::Base
 
   def base_url
     'https://baseurl.com'
+  end
+
+  private
+
+  def parse_response(response)
+    JSON.parse(response.body)['array'].reduce('', :+) if response.body.present?
   end
 end
