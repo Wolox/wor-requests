@@ -1,5 +1,6 @@
 # Wolox on Rails - Requests
 [![Gem Version](https://badge.fury.io/rb/wor-requests.svg)](https://badge.fury.io/rb/wor-requests)
+[![Build Status](https://travis-ci.org/Wolox/wor-requests.svg)](https://travis-ci.org/Wolox/wor-requests)
 [![Code Climate](https://codeclimate.com/github/Wolox/wor-requests/badges/gpa.svg)](https://codeclimate.com/github/Wolox/wor-requests)
 
 Make external requests in you service objects, with easy logging and error handling!
