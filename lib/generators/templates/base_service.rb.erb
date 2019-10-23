@@ -1,21 +1,35 @@
-<% if @module_name.present? %>module <%= @module_name.camelize %>
+<% if @module_name.present? %>
+module <%= @module_name.camelize %>
   class <%= class_name %>Service < Wor::Requests::Base
-<% else %> class <%= class_name %>Service < Wor::Requests::Base<% end %>
-<% if @module_name.present? %>  <% end %>  # An example of how to get all repositories for the specified user in github.com
-<% if @module_name.present? %>  <% end %>  # def repositories(username)
-<% if @module_name.present? %>  <% end %>  #   get(
-<% if @module_name.present? %>  <% end %>  #     attempting_to: "get repositories of #{username}",
-<% if @module_name.present? %>  <% end %>  #     path: "/users/#{username}/repos"
-<% if @module_name.present? %>  <% end %>  #   )
-<% if @module_name.present? %>  <% end %>  # rescue Wor::Requests::RequestError => e
-<% if @module_name.present? %>  <% end %>  #   puts e.message
-<% if @module_name.present? %>  <% end %>  # end
+    # An example of how to get all repositories for the specified user in github.com
+    # def repositories(username)
+    #   get(
+    #     attempting_to: "get repositories of #{username}",
+    #     path: "/users/#{username}/repos"
+    #   )
+    # rescue Wor::Requests::RequestError => e
+    #   puts e.message
+    # end
 
-<% if @module_name.present? %>  <% end %>  # protected
+    # def base_url
+    #   'https://api.github.com'
+    # end
+  end
+end
+<% else %>
+class <%= class_name %>Service < Wor::Requests::Base
+  # An example of how to get all repositories for the specified user in github.com
+  # def repositories(username)
+  #   get(
+  #     attempting_to: "get repositories of #{username}",
+  #     path: "/users/#{username}/repos"
+  #   )
+  # rescue Wor::Requests::RequestError => e
+  #   puts e.message
+  # end
 
-<% if @module_name.present? %>  <% end %>  # def base_url
-<% if @module_name.present? %>  <% end %>  #   'https://api.github.com'
-<% if @module_name.present? %>  <% end %>  # end
-<% if @module_name.present? %>  <% end %>end
-<% if @module_name.present? %>end
+  # def base_url
+  #   'https://api.github.com'
+  # end
+end
 <% end %>
