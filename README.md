@@ -31,8 +31,29 @@ Wor::Requests.configure do |config|
 end
 ```
 
-## Usage
+## Generators
+```ruby
+rails generate wor:requests:service NAME
+```
 
+### Generator options
+#### module
+Specifying the module name as:
+
+```ruby
+rails generate wor:requests:service NAME --module MODULE_NAME
+```
+We can create a service with an inner class called NAME, and external module called MODULE_NAME
+
+```ruby
+module ModuleName
+  class NameService < Wor::Requests::Base
+    # Your code here
+  end
+end
+```
+
+## Service example
 To write your first Service using Wor-requests you can write something like this:
 
 ```ruby
@@ -55,15 +76,8 @@ class GithubService < Wor::Requests::Base
   end
 end
 
-puts GithubService.new.repositories('alebian')
+puts GithubService.new.repositories('wolox')
 ```
-
-Or, even easier, run `rails generate wor:requests:service NAME` in your Rails root
-#### options in service generator
-- module
-
-  `rails generate wor:requests:service NAME --module MODULE_NAME`
-
 
 If you need to send body parameters in a post request you can write something like this:
 
