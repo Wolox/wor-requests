@@ -1,9 +1,7 @@
 # Wolox on Rails - Requests
 [![Gem Version](https://badge.fury.io/rb/wor-requests.svg)](https://badge.fury.io/rb/wor-requests)
-[![Dependency Status](https://gemnasium.com/badges/github.com/Wolox/wor-requests.svg)](https://gemnasium.com/github.com/Wolox/wor-requests)
 [![Build Status](https://travis-ci.org/Wolox/wor-requests.svg)](https://travis-ci.org/Wolox/wor-requests)
 [![Code Climate](https://codeclimate.com/github/Wolox/wor-requests/badges/gpa.svg)](https://codeclimate.com/github/Wolox/wor-requests)
-[![Test Coverage](https://codeclimate.com/github/Wolox/wor-requests/badges/coverage.svg)](https://codeclimate.com/github/Wolox/wor-requests/coverage)
 
 Make external requests in you service objects, with easy logging and error handling!
 
@@ -33,8 +31,29 @@ Wor::Requests.configure do |config|
 end
 ```
 
-## Usage
+## Generators
+```ruby
+rails generate wor:requests:service NAME
+```
 
+### Generator options
+#### module
+Specifying the module name as:
+
+```ruby
+rails generate wor:requests:service NAME --module MODULE_NAME
+```
+We can create a service with an inner class called NAME, and external module called MODULE_NAME
+
+```ruby
+module ModuleName
+  class NameService < Wor::Requests::Base
+    # Your code here
+  end
+end
+```
+
+## Service example
 To write your first Service using Wor-requests you can write something like this:
 
 ```ruby
@@ -57,11 +76,8 @@ class GithubService < Wor::Requests::Base
   end
 end
 
-puts GithubService.new.repositories('alebian')
+puts GithubService.new.repositories('wolox')
 ```
-
-Or, even easier, run `rails generate wor:requests:service NAME` in your Rails root
-
 
 If you need to send body parameters in a post request you can write something like this:
 
