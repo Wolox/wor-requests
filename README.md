@@ -79,6 +79,14 @@ end
 puts GithubService.new.repositories('wolox')
 ```
 
+If you need to get the response headers, add a block in the call with the headers output
+
+```ruby
+GithubService.new.repositories('wolox') do |response|
+  puts response.headers
+end
+```
+
 If you need to send body parameters in a post request you can write something like this:
 
 ```ruby
